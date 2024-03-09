@@ -6,9 +6,11 @@ from math import ceil
 
 def create_driver():
     remote_url = 'http://10.0.0.146:4444/wd/hub'
-    options = webdriver.FirefoxOptions()
+    local_url = 'http://localhost:4444/wd/hub'
+    options = webdriver.ChromeOptions()
     options.add_argument('--headless=new')
-    driver = webdriver.Firefox(options=options)
+    # driver = webdriver.Chrome(options=options)
+    driver = webdriver.Remote(command_executor=local_url, options=options)
     return driver
 
 
@@ -36,11 +38,13 @@ def main():
 
     driver.quit()
 
-    with open('jobs.csv', 'w') as f:
-        f.write(','.join(job_list[0].keys()) + '\n')
-        for job in job_list:
-            f.write(','.join([job['company'], job['role'], job['location'], job['start_date'], job['open_date'], job['close_date'], job['vacancies'], job['salary']]) + '\n')
+    #with open('jobs.csv', 'w') as f:
+    #    f.write(','.join(job_list[0].keys()) + '\n')
+    #    for job in job_list:
+    #        f.write(','.join([job['company'], job['role'], job['location'], job['start_date'], job['open_date'], job['close_date'], job['vacancies'], job['salary']]) + '\n')
 
+    for job in job_list:
+        print(job)
 
 if __name__ == '__main__':
     main()
