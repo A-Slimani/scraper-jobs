@@ -5,9 +5,10 @@ from math import ceil
 
 
 def create_driver():
-    options = webdriver.ChromeOptions()
+    remote_url = 'http://10.0.0.146:4444/wd/hub'
+    options = webdriver.FirefoxOptions()
     options.add_argument('--headless=new')
-    driver = webdriver.Chrome(options=options)
+    driver = webdriver.Firefox(options=options)
     return driver
 
 
