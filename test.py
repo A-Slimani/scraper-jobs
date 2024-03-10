@@ -1,5 +1,5 @@
-import math
 
-i = '409'
+x = None
 
-print(math.ceil(int(i) / 20))
+if x:
+    print("NONE TEST")
