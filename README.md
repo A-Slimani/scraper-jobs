@@ -5,3 +5,4 @@ scraper to get grad roles from websites
 
 ## Todo Checklist
 - Store it in a database 
+- create classes
