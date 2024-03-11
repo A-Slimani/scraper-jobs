@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from details import get_details
 from math import ceil
+import csv
 
 
 def create_driver():
@@ -35,10 +36,10 @@ def main():
 
     driver.quit()
 
-    with open('jobs.csv', 'w') as f:
-        f.write(','.join(job_list[0].keys()) + '\n')
-        for job in job_list:
-            f.write(','.join([job['company'], job['role'], job['location'], job['start_date'], job['open_date'], job['close_date'], job['vacancies'], job['salary']]) + '\n')
+    with open('jobs.csv', 'w', encoding='utf-8') as f:
+        dict_writer = csv.DictWriter(f, job_list[0].keys())
+        dict_writer.writeheader()
+        dict_writer.writerows(job_list)
 
 
 if __name__ == '__main__':
