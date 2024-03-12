@@ -17,7 +17,6 @@ def main():
 
     driver.get("https://au.prosple.com/search-jobs?study_fields=502&locations=9692&defaults_applied=1&sort=popularity%7Cdesc&start=0&keywords=Graduate&opportunity_types=1")
     total_job_count = driver.find_element(By.CLASS_NAME, 'SearchResultCount__ResultsCount-sc-17kyq0v-0.bEIzsi').text.split(' ')[2]
-    # pages = ceil(int(total_job_count) / 20)
     pages = int(total_job_count)
     current = 0
 
