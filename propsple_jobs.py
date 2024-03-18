@@ -1,18 +1,12 @@
-from selenium import webdriver 
 from selenium.webdriver.common.by import By
-from details import get_details
+from general_tools import create_driver, write_to_csv
+from prosple_details import get_details
 from math import ceil
 import csv
 
 
-def create_driver():
-    options = webdriver.ChromeOptions()
-    options.add_argument('--headless=new')
-    driver = webdriver.Chrome(options=options)
-    return driver
 
-
-def main():
+def prosple_job_list():
     driver = create_driver()
 
     driver.get("https://au.prosple.com/search-jobs?study_fields=502&locations=9692&defaults_applied=1&sort=popularity%7Cdesc&start=0&keywords=Graduate&opportunity_types=1")
@@ -35,11 +29,4 @@ def main():
 
     driver.quit()
 
-    with open('jobs.csv', 'w', encoding='utf-8') as f:
-        dict_writer = csv.DictWriter(f, job_list[0].keys())
-        dict_writer.writeheader()
-        dict_writer.writerows(job_list)
-
-
-if __name__ == '__main__':
-    main()
+    write_to_csv(job_list, 'prosple_jobs.csv') 

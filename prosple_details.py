@@ -61,13 +61,14 @@ def get_details(driver, card):
             # details.append({detail_titles[i].text : detail_list[i].text})
             job[detail_titles[i].text] = detail_list[i].text
 
-        # start_date = detail_list[0].text
-        # open_date = detail_list[1].text
-        # close_date = detail_list[2].text
-        # vacancies = detail_list[3].text
     except (NoSuchElementException, IndexError) as e:
         print('No details element')
 
+    try:
+        link_element = driver.find_element(By.XPATH, '/html/body/div[1]/div[2]/section/main/div[2]/div[2]/div[2]/div[2]/section/div[2]/div/a')
+        job['link'] = link_element.get_attribute('href')
+    except NoSuchElementException as e:
+        job['link'] = 'N/A'
 
     try:
         card.click()
