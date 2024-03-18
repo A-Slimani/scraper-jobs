@@ -1,16 +1,5 @@
-x = 'name'
-y = 'Abdullah'
-b = 'age'
-c = '25'
+import datetime
 
+today = (datetime.datetime.today() + datetime.timedelta(days=7)).strftime('%d/%m/%Y')
 
-first = {}
-second = []
-
-first[x] = y
-first[b] = c
-
-second.append({x: y, b: c})
-
-print(first)
-print(second)
+print(today)
