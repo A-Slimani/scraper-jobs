@@ -13,13 +13,13 @@ def get_details(driver, card):
         card_details = None
 
     try:
-        job['role'] = driver.find_element(
+        job['title'] = driver.find_element(
             By.CLASS_NAME, 
             'sc-eCssSg.kgSmcY.heading.SearchOpportunityContentstyle__OpportunityTitle-sc-k2tet-12.htCSOp'
             ).text.replace(',', ' ')
     except NoSuchElementException as e:
         print('No role element')
-        job['role'] = 'N/A'
+        job['title'] = None
     
     try:
         job['company'] = driver.find_element(
@@ -28,7 +28,7 @@ def get_details(driver, card):
             ).text.replace(',', ' ')
     except NoSuchElementException as e:
         print('No company element')
-        job['company'] = 'N/A'
+        job['company'] = None
     
     try:
         job['location'] = driver.find_elements(
@@ -37,19 +37,19 @@ def get_details(driver, card):
             )[1].text.replace(',', ' ')
     except (NoSuchElementException, IndexError) as e:
         print('No location element')
-        job['location'] = 'N/A'
+        job['location'] = None 
 
-    try:
-        salary = driver.find_element(
-            By.CLASS_NAME, 
-            'SearchOpportunityContentstyle__SalaryDetail-sc-k2tet-40.ejxyuQ'
-            ).text
-        salary = salary.split(' ')[1: -2] 
-        for i in range(len(salary)):
-            salary[i] = salary[i].replace(',', '')
-        job['salary'] = ' '.join(salary)
-    except NoSuchElementException as e:
-        job['salary'] = 'N/A'
+    # try:
+    #     salary = driver.find_element(
+    #         By.CLASS_NAME, 
+    #         'SearchOpportunityContentstyle__SalaryDetail-sc-k2tet-40.ejxyuQ'
+    #         ).text
+    #     salary = salary.split(' ')[1: -2] 
+    #     for i in range(len(salary)):
+    #         salary[i] = salary[i].replace(',', '')
+    #     job['salary'] = ' '.join(salary)
+    # except NoSuchElementException as e:
+    #     job['salary'] = 'N/A'
 
     try:
         if card_details is None:
@@ -59,7 +59,11 @@ def get_details(driver, card):
 
         for i in range(len(detail_titles)):
             # details.append({detail_titles[i].text : detail_list[i].text})
-            job[detail_titles[i].text] = detail_list[i].text
+            # job[detail_titles[i].text] = detail_list[i].text
+            if detail_titles[i].text == 'APPLICATIONS CLOSE':
+                job['close_date'] = detail_list[i].text
+            if detail_titles[i].text == 'SALARY':
+                job['salary'] = detail_list[i].text
 
     except (NoSuchElementException, IndexError) as e:
         print('No details element')
@@ -68,11 +72,13 @@ def get_details(driver, card):
         link_element = driver.find_element(By.XPATH, '/html/body/div[1]/div[2]/section/main/div[2]/div[2]/div[2]/div[2]/section/div[2]/div/a')
         job['link'] = link_element.get_attribute('href')
     except NoSuchElementException as e:
-        job['link'] = 'N/A'
+        job['link'] = None
 
     try:
         card.click()
     except NoSuchElementException as e:
         print('end??')
+
+    job['website'] = 'prosple'
 
     return job

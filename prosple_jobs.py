@@ -1,9 +1,8 @@
 from selenium.webdriver.common.by import By
-from general_tools import create_driver, write_to_csv
+from general_tools import create_driver, write_to_csv, write_to_db, connect_to_db
 from prosple_details import get_details
 from math import ceil
 import csv
-
 
 
 def prosple_job_list():
@@ -14,7 +13,8 @@ def prosple_job_list():
     pages = int(total_job_count)
     current = 0
 
-    job_list = []
+    db_connection = connect_to_db()
+    # job_list = []
 
     while current <= pages:
         print("current: ", current)
@@ -23,10 +23,14 @@ def prosple_job_list():
         job_cards = driver.find_elements(By.CLASS_NAME, 'sc-jifIRw.lhxhuD')
 
         for card in job_cards:
-            job_list.append(get_details(driver, card))
+            job = get_details(driver, card)
+            write_to_db(job, db_connection[0], db_connection[1])
+            write_to_csv(job, 'prosple_jobs.csv')
+            # job_list.append(get_details(driver, card))
 
         current += 20
 
     driver.quit()
 
-    write_to_csv(job_list, 'prosple_jobs.csv') 
+    # write_to_csv(job_list, 'prosple_jobs.csv') 
+
