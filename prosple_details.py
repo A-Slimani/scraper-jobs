@@ -64,6 +64,12 @@ def get_details(driver, card):
                 job['close_date'] = detail_list[i].text
             if detail_titles[i].text == 'SALARY':
                 job['salary'] = detail_list[i].text
+            
+        if 'close_date' not in job:
+            job['close_date'] = 'N/A'
+
+        if 'salary' not in job:
+            job['salary'] = 'N/A'
 
     except (NoSuchElementException, IndexError) as e:
         print('No details element')

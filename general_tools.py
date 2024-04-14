@@ -14,8 +14,8 @@ def create_driver():
 
 def write_to_csv(job, file_name: str):
     with open(file_name, 'a', encoding='utf-8', newline='') as f:
-        if os.path.exists(file_name) or os.stat(file_name).st_size == 0:
-            dict_writer = csv.DictWriter(f, job.keys())
+        dict_writer = csv.DictWriter(f, job.keys())
+        if os.path.exists(file_name) and os.stat(file_name).st_size == 0:
             dict_writer.writeheader()
         dict_writer.writerow(job)
 
