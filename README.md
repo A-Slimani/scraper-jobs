@@ -1,6 +1,7 @@
 # scraper-jobs
 scraper to get grad roles from websites
 -  Prosple
+-  Grad Connect
 -  *Others soon...*
 
 
